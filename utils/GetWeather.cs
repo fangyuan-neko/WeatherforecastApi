@@ -1,12 +1,13 @@
 using System.Net;
 using Newtonsoft.Json;
 using Model;
+using Services;
 
 namespace Method;
 
-public class WeatherAction
+public class WeatherAction(WeatherforecastService weatherforecastService)
 {
-    public static async Task<Weather> GetWeather()
+    private static async Task<Weather> DownloadWeather()
     {
         HttpClient client = new(new HttpClientHandler()
         {
@@ -19,5 +20,18 @@ public class WeatherAction
         var weather = await result.Content.ReadAsStringAsync();
         JsonData today = JsonConvert.DeserializeObject<JsonData>(weather);
         return today.daily[0];
+    }
+    public async Task<Weather> GetWeather()
+    {
+        var weatherInDB = weatherforecastService.GetWeatherFromDB();
+        if (weatherInDB == null)
+        {
+            var weather = await DownloadWeather();
+            return weatherforecastService.AddWeather(weather);
+        }
+        else
+        {
+            return weatherInDB;
+        }
     }
 }

@@ -1,13 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Model;
 
-public struct Weather
+public class Weather
 {
+    [Key]
     public string fxDate { get; set; }
     public string sunrise { get; set; }
     public string sunset { get; set; }
     public string moonrise { get; set; }
     public string moonset { get; set; }
-    public string moonPlase { get; set; }
+    public string moonPhase { get; set; }
     public int moonPlaseIcon { get; set; }
     public int tempMax { get; set; }
     public int tempMin { get; set; }
