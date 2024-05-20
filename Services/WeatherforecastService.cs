@@ -17,4 +17,8 @@ public class WeatherforecastService(DBConfig database)
         string date = DateTime.Today.ToString("yyyy-MM-dd");
         return db.Weathers.SingleOrDefault(weather => weather.fxDate == date);
     }
+    public List<Weather> GetWeathersFromDB()
+    {
+        return [.. db.Weathers];
+    }
 }
