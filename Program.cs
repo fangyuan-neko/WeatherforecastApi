@@ -14,7 +14,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddDbContext<DBConfig>();
-builder.Services.AddScoped<WeatherAction>();
 builder.Services.AddScoped<WeatherforecastService>();
 builder.Services.AddSingleton<Logger>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -54,6 +53,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+new System.Threading.Timer(state =>
+{
+    WeatherforecastService.GetWeather();
+},
+null,
+TimeSpan.Zero,
+TimeSpan.FromDays(1));
 
 app.UseCors("AllowAll");
 app.UseAuthentication();

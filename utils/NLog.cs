@@ -4,9 +4,10 @@ namespace Method;
 
 public class Logger
 {
-    public Logger(IConfiguration configuration)
+    private readonly IConfiguration configuration;
+    public Logger()
     {
         NLog.LogManager.Configuration = new NLogLoggingConfiguration(configuration.GetSection("NLog"));
     }
-    public readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+    public static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 }

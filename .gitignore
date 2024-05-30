@@ -1,5 +1,5 @@
 .vscode/
 bin/
 obj/
-
+user.db
 .fake
